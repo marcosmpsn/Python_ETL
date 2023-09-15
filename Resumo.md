@@ -1482,3 +1482,328 @@ print(len(linguagens))
 >>>5
 ```
 
+# 11. Conjuntos (Aula29.py)
+Conjuntos ou *sets* são uma coleção que não possuem objetos repetidos. Usamos um conjunto para representar conjuntos matemáticos ou eliminar itens duplicados de um itinerável.
+
+O conjunto é formado utilizando chaves {}, ou por meio do comando *set*
+
+```
+conjunto1 = set([1, 2, 3, 1, 2, 3, 4])
+print(conjunto1)
+>>>{1, 2, 3, 4}
+
+conjunto2 = set("abacaxi")
+print(conjunto2)
+>>>{'i', 'b', 'c', 'x', 'a'}
+
+conjunto3 = set(("palio", "gol", "celta", "palio"))
+print(conjunto3)
+>>>{'gol', 'palio', 'celta'}
+
+conjunto4 = {"python", "java", "python"}
+print(conjunto4)
+>>>{'java', 'python'}
+
+conjunto5 = {1, 2, 1, 4, 2, 4, 6, 3, 5, 6}
+print(conjunto5)
+>>>{1, 2, 3, 4, 5, 6}
+```
+O *set* não segue uma ordenação específica dos elementos. Apenas garante a eliminação das repetições.
+
+## 11.1 - Acessando os dados
+Conjuntos em python não suportam indexação e nem fatiamento. Caso queira acessar os valores de um conjunto, é necessário convertê-lo para uma lista.
+
+```
+numeros = {1, 2, 3, 2}
+
+numeros = list(numeros)
+print(numeros)
+>>>[1, 2, 3]
+
+print(numeros[0])
+>>>1
+```
+## 11.2 - Iterar Conjuntos
+Apesar de os dados não serem indexados, é possível percorrer (iterar) os elementos dos conjuntos
+A forma mais comum de iterar os dados de um conjunto é usando o comando *for*
+
+```
+carros = {"gol", "celta", "palio"}
+
+for carro in carros:
+    print(carro)
+
+>>>palio
+celta
+gol
+```
+
+## 11.3 - Função Enumerate
+Igual nas listas e tuplas
+
+```
+carros = {"gol", "celta", "palio"}
+for indice, carro in enumerate(carros):
+    print(f"{indice}: {carro}")
+
+>>>0: gol
+1: celta
+2: palio
+```
+## 11.4 - Métodos da classe set (Aula30.py)
+### 11.4.1 - Union
+Une dois conjuntos em um novo conjunto
+
+Estrutura: [conjunto1].union([conjunto2])
+
+```
+conjunto_a = {1, 2}
+conjunto_b = {3, 4}
+
+uniao = conjunto_a.union(conjunto_b)
+
+print(uniao)
+>>>{1, 2, 3, 4}
+```
+### 11.4.2 - Intersection
+Cria um novo conjunto com os elementos em comum de dois conjuntos comparados.
+
+Estrutura: [conjunto1].intersection([conjunto2])
+
+```
+conjunto_a = {1, 2, 3}
+conjunto_b = {2, 3, 4}
+
+intersecao = conjunto_a.intersection(conjunto_b)
+
+print(intersecao)
+>>> {2, 3}
+```
+
+### 11.4.3 - Difference
+Cria um novo conjunto, com elementos que estejam no primeiro conjunto e não estejam no segundo.
+
+Estrutura: [conjuto1].difference([conjunto2])
+
+```
+conjunto_a = {1, 2, 3}
+conjunto_b = {2, 3, 4}
+
+diferenca1 = conjunto_a.difference(conjunto_b)
+print(diferenca1)
+>>>{1}
+
+diferenca2 = conjunto_b.difference(conjunto_a)
+print(diferenca2)
+>>>{4}
+```
+
+### 11.4.4 - Symmetric Difeference
+Diferença simétrica é a união das diferenças dos conjuntos (conjunto1 - conjunto2) + (conjunto2 - conjunto1)
+
+Em outras palavras, é a união dos conjuntos menos a intersecção deles.
+
+Estrutura: [conjunto1].symmetric_difference([conjunto2])
+
+```
+conjunto_a = {1, 2, 3}
+conjunto_b = {2, 3, 4}
+
+diferenca_simetrica = conjunto_a.symmetric_difference(conjunto_b)
+print(diferenca_simetrica)
+>>>{1, 4}
+```
+
+### 11.4.5 - Is Sub Set
+Verifica se o conjunto1 está contido no conjunto2, ou seja, se os elementos do conjunto1 também são elementos do conjunto2. O resultado é o um booleano True/False.
+
+Estrutura: [conjunto1].issubset([conjunto2])
+
+```
+conjunto_a = {1, 2, 3}
+conjunto_b = {4, 1, 2, 5, 6, 3}
+
+a_contido_em_b = conjunto_a.issubset(conjunto_b)
+print(a_contido_em_b)
+>>>True
+
+b_contido_em_a = conjunto_b.issubset(conjunto_a)
+print(b_contido_em_a)
+>>>False
+```
+### 11.4.6 - Is Super Set
+Verifica se o conjunto1 contém o conjunto2, ou seja, se os elementos do conjunto2 também são elementos do conjunto1. Veja que é a lógica inversa do item anterior. O resultado é um booleano True/False.
+
+Estrutura: [conjunto1].issuperset([conjunto2])
+
+```
+conjunto_a = {1, 2, 3}
+conjunto_b = {4, 1, 2, 5, 6, 3}
+
+a_contem_b = conjunto_a.issuperset(conjunto_b)
+print(a_contem_b)
+>>>False
+
+b_contem_a = conjunto_b.issuperset(conjunto_a)
+print(b_contem_a)
+>>>True
+```
+### 11.4.7 - Is Disjoint
+Verifica se os conjuntos são distintos, ou seja, não possuem nenhum valor em comum. O resultado é um booleano True/False.
+
+Estrutura: [conjunto1].isdisjoint([conjunto2])
+
+```
+conjunto_a = {1, 2, 3, 4, 5}
+conjunto_b = {6, 7, 8, 9}
+conjunto_c = {1, 0}
+
+a_distinto_b = conjunto_a.isdisjoint(conjunto_b)
+print(a_distinto_b)
+>>>True
+
+a_distinto_c = conjunto_a.isdisjoint(conjunto_c)
+print(a_distinto_c)
+>>>False
+```
+### 11.4.8 - Add
+Adiciona elementos ao conjunto, caso não exista no conjunto. Funciona como o *append* nas listas.
+
+Estrutura: [conjunto].add([elemento])
+
+```
+sorteio = {1, 23}
+
+sorteio.add(25)
+print(sorteio)
+>>>{1, 25, 23}
+
+sorteio.add(42)
+print(sorteio)
+>>>{1, 42, 25, 23}
+
+sorteio.add(25)
+print(sorteio)
+>>>{1, 42, 25, 23}
+```
+
+### 11.4.9 - Clear
+Limpa os elementos do conjunto, deixando-o vazio.
+
+Estrutura: [conjunto].clear()
+
+```
+sorteio = {1, 23}
+
+sorteio.clear()
+print(sorteio)
+>>>set()
+```
+### 11.4.10 - Copy
+Copia um conjunto existente em um novo conjunto.
+
+Estrutura: [conjunto].copy()
+
+```
+sorteio = {1, 23}
+sorteio1 = sorteio.copy()
+
+print(sorteio1)
+>>>{1, 23}
+```
+### 11.4.11 - Discard
+Descarta o valor especificado do conjunto.
+
+Estrutura: [conjunto].discard([elemento])
+
+```
+numeros = {1, 2, 3, 1, 2, 4, 5, 5, 6, 7, 8, 9, 0}
+print(numeros)
+>>>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+numeros.discard(1)
+print(numeros)
+>>>{0, 2, 3, 4, 5, 6, 7, 8, 9}
+
+numeros.discard(45)
+print(numeros)
+>>>{0, 2, 3, 4, 5, 6, 7, 8, 9}
+
+```
+
+### 11.4.12 - Pop
+Elimina o primeiro valor do conjunto.
+
+Estrutura: [conjunto].pop()
+
+```
+numeros = {1, 2, 3, 1, 2, 4, 5, 5, 6, 7, 8, 9, 0}
+print(numeros)
+>>>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+numeros.pop()
+print(numeros)
+>>>{1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+numeros.pop()
+print(numeros)
+>>>{2, 3, 4, 5, 6, 7, 8, 9}
+```
+
+### 11.4.13 - Remove
+Remove do conjunto o elemento especificado. Difere do *discard* porque só funciona com elementos que pertençam ao conjunto. Se tentar usar o *remove* com um elemento que não está no conjunto, aparecerá uma mensagem de erro.
+
+Já o *discard*, se for usado com um elemento que não pertence ao conjunto, o comando é ignorado (não há erro)
+
+Estrutura: [conjunto].remove([elemento])
+
+```
+numeros = {1, 2, 3, 1, 2, 4, 5, 5, 6, 7, 8, 9, 0}
+print(numeros)
+>>>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+numeros.remove(0)
+print(numeros)
+>>>{1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+numeros.remove(5)
+print(numeros)
+>>>{1, 2, 3, 4, 6, 7, 8, 9}
+
+numeros.remove(38)
+print(numeros)
+>>>numeros.remove(38)
+KeyError: 38
+```
+
+### 11.4.14 - Len
+Mede o tamanho (número de elementos) do conjunto.
+
+Estrutura: len([conjunto])
+
+```
+numeros = {1, 2, 3, 1, 2, 4, 5, 5, 6, 7, 8, 9, 0}
+print(numeros)
+>>>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+print(len(numeros))
+>>>10
+```
+
+### 11.4.15 - In
+Verifica se um elemento pertence ao conjunto. O resultado é um booleano True/False
+
+Estruruta: [elemento] in [conjunto]
+
+```
+numeros = {1, 2, 3, 1, 2, 4, 5, 5, 6, 7, 8, 9, 0}
+print(numeros)
+>>>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+print(1 in numeros)
+>>>True
+
+print(10 in numeros)
+>>>False
+```
+# 12. Dicionários
