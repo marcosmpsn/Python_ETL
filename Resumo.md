@@ -1806,4 +1806,490 @@ print(1 in numeros)
 print(10 in numeros)
 >>>False
 ```
-# 12. Dicionários
+# 12. Dicionários (Aula31.py)
+É um conjunto não ordenado de pares de chave/valor, onde as chaves são únicas, imutáveis.
+
+Dicionários são delimitados por chaves {} e contém uma lista de pares chave/valor separados por vírgulas.
+
+Podem ser contruídos também pelo contrutor *dict*
+
+Estrutura: [dicionário] = {[chave1]:[valor1], [chave2]:[valor2]}
+
+```
+pessoa = {"nome": "Marcos", "idade": 33}
+print(pessoa)
+>>>{'nome': 'Marcos', 'idade': 33}
+
+pessoa = dict(nome="Guilherme", idade=28)
+print(pessoa)
+>>>{'nome': 'Guilherme', 'idade': 28}
+```
+
+É possivel ainda adicionar um novo valor ao dicionário já existente. 
+```
+pessoa["telefone"] = "98765-4321"
+print(pessoa)
+>>>{'nome': 'Guilherme', 'idade': 28, 'telefone': '98765-4321'}
+```
+## 12.1 - Como acessar dados no dicionário
+
+Para acessar os valores em um dicionário é semelhante ao método para adicionar os valores. Usa-se o nome do dicionário e entre colchetes [] o valor da chave procurada.
+```
+print(pessoa["nome"])
+>>>Guilherme
+```
+Da mesma forma, é possível mudar o valor que determinada chave possui no dicionário. É feito como no passo de adicionar um novo par chave/valor.
+
+Quando adicionamos o telefone no dicionário, não existia a chave "telefone", portanto ela foi adicionada. Caso já exista uma chave cadastraada, ela irá sobreescrever o valor pela nova entrada:
+
+```
+pessoa["nome"] = "Maria"
+pessoa["idade"] = 18
+pessoa["telefone"] = "12345-6789"
+print(pessoa)
+>>>{'nome': 'Maria', 'idade': 18, 'telefone': '12345-6789'}
+```
+
+## 12.2 - Dicionários Aninhados
+
+Assim como nas listas e nas tuplas, os dicionários também podem ser construidos de forma aninhada, ou seja, ter dicionários dentro de um dicionário. Isso é útil para formar um banco de dados, por exemplo.
+
+```
+contatos = {
+    "marcos@xpto.com": {"nome": "Marcos", "telefone": "3333-2222"},
+    "thais@xpto.com": {"nome": "Thais", "telefone": "3333-1111"},
+    "miuxa@xpto.com": {"nome": "Miúxa", "telefone": "3333-4444"},
+    "enzo@xpto.com": {"Nome": "Enzo", "telefone": "3333-3333"}
+}
+
+print(contatos["enzo@xpto.com"]["telefone"])
+>>>3333-3333
+```
+## 12.3 - Iterar dicionários
+
+Também é possível iterar dicionários. A forma mais comum é com o *for*.
+
+```
+for chave in contatos:
+    print(chave, contatos[chave])
+
+>>>marcos@xpto.com {'nome': 'Marcos', 'telefone': '3333-2222'}
+thais@xpto.com {'nome': 'Thais', 'telefone': '3333-1111'}
+miuxa@xpto.com {'nome': 'Miúxa', 'telefone': '3333-4444'}
+enzo@xpto.com {'Nome': 'Enzo', 'telefone': '3333-3333'}
+```
+## 12.4 - Métodos na classe dict (Aula32.py)
+
+### 12.4.1 - Clear
+Limpa os valores de todo o dicionário
+
+Estrutura: [dicionário].clear()
+
+```
+contatos = {
+    "marcos@xpto.com": {"nome": "Marcos", "telefone": "3333-2222"},
+    "thais@xpto.com": {"nome": "Thais", "telefone": "3333-1111"},
+    "miuxa@xpto.com": {"nome": "Miúxa", "telefone": "3333-4444"},
+    "enzo@xpto.com": {"Nome": "Enzo", "telefone": "3333-3333"}
+}
+
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'Nome': 'Enzo', 'telefone': '3333-3333'}}
+
+contatos.clear()
+print(contatos)
+>>>{}
+```
+
+### 12.4.2 - Copy
+Copia um dicionário existente para outro objeto.
+
+Estrutura: [dicionário].copy()
+
+```
+copia = contatos.copy()
+print(copia)
+{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'Nome': 'Enzo', 'telefone': '3333-3333'}}
+```
+
+### 12.4.3 - From Keys
+Cria chaves em um dicionário sem especificar os valores.
+
+Estrutura: [dicionario].fromkeys([chave1, chave2, ...], [valor] )
+
+Caso o [valor] não seja especificado, será completado com "None"
+
+```
+pessoas = dict.fromkeys(["nome", "telefone"])
+print(pessoas)
+
+>>>{'nome': None, 'telefone': None}
+
+pessoas2 = dict.fromkeys(["nome", "telefone"], "vazio")
+print(pessoas2)
+
+>>>{'nome': 'vazio', 'telefone': 'vazio'}
+```
+
+### 12.4.4 - Get
+Uma outra forma de acessar valores dentro do dicionário. O comando *get* busca a chave no dicionário. Caso não exista a chave buscada, retornará "None", ou um valor especificado no comando.
+
+```
+print(contatos.get("chave"))
+>>>None
+
+print(contatos.get("chave", {}))
+>>>{}
+
+print(contatos.get("marcos@xpto.com", {}))
+>>>{'nome': 'Marcos', 'telefone': '3333-2222'}
+```
+
+### 12.4.5 - Items
+Retorna a tupla correspondente. Útil ao iterar utilizando o for.
+
+Estrutura: [dicionario].items()
+```
+print(contatos.items())
+
+>>>dict_items([('marcos@xpto.com', {'nome': 'Marcos', 'telefone': '3333-2222'}), ('thais@xpto.com', {'nome': 'Thais', 'telefone': '3333-1111'}), ('miuxa@xpto.com', {'nome': 'Miúxa', 'telefone': '3333-4444'}), ('enzo@xpto.com', {'Nome': 'Enzo', 'telefone': '3333-3333'})])
+```
+### 12.4.6 - Keys
+Retorna as chaves de um dicionário.
+
+Estrutura: [dicionário].keys()
+
+```
+print(contatos.keys())
+>>>dict_keys(['marcos@xpto.com', 'thais@xpto.com', 'miuxa@xpto.com', 'enzo@xpto.com'])
+```
+
+### 12.4.7 - Pop
+Remove a chave especificada no comando. Caso a chave não exista (e seja especificado no comando *pop*), será mostrado o valor especificado.
+
+Estrutura: [dicionario].pop([chave], [valor])
+
+```
+print(contatos.pop("enzo@xpto.com"))
+>>>{'Nome': 'Enzo', 'telefone': '3333-3333'}
+
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}}
+
+print(contatos.pop("enzo@xpto.com", {}))
+>>>{}
+```
+Caso não seja especificado e não exista a chave, o comando *pop* dará erro e paralisa o código.
+
+### 12.4.8 - Pop Item
+Parecido com o *pop*, porém retira os itens em sequência, do último ao primeiro.
+
+Estrutura: [dicionario].popitem()
+
+```
+contatos = {
+    "marcos@xpto.com": {"nome": "Marcos", "telefone": "3333-2222"},
+    "thais@xpto.com": {"nome": "Thais", "telefone": "3333-1111"},
+    "miuxa@xpto.com": {"nome": "Miúxa", "telefone": "3333-4444"},
+    "enzo@xpto.com": {"Nome": "Enzo", "telefone": "3333-3333"}
+}
+contatos.popitem()
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}}
+
+contatos.popitem()
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}}
+
+contatos.popitem()
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}}
+```
+### 12.4.9 - Set Default
+Comando muito útil: Caso a chave inserida no comando não exista, ela é inserida ao dicionário. Caso já exista, ele informa o valor associado àquela chave, não alterando o valor.
+
+Estrutura: [dicionario].setdefault([chave], [valor])
+
+```
+dados = {"nome": "Marcos", "telefone": "3333-2222"}
+print(dados.setdefault("nome", "Maria"))
+>>>Marcos
+
+print(dados.setdefault("idade", 33))
+>>>33
+
+print(dados)
+>>>{'nome': 'Marcos', 'telefone': '3333-2222', 'idade': 33}
+```
+### 12.4.10 - Update
+Atualiza um dicionário com base em outro dicionário inserido no comando. É possível também adicionar um novo par chave/valor em um dicionário existente.
+
+Estrutura: [dicionario].update({[chave],[valor]})
+
+```
+contatos.update({"enzo@xpto.com": {"nome": "Peruca", "telefone": "3333-5555"}})
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'nome': 'Peruca', 'telefone': '3333-5555'}}
+
+contatos.update({"bento@xpto.com": {"nome": "Bento", "telefone": "3333-7777"}})
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'nome': 'Peruca', 'telefone': '3333-5555'}, 'bento@xpto.com': {'nome': 'Bento', 'telefone': '3333-7777'}}
+```
+
+### 12.4.11 - Values
+Retorna os valores de um dicionário, sem as chaves (o contrário do comando keys).
+
+Estrutura: [dicionario].values()
+
+```
+print(contatos.values())
+>>>dict_values([{'nome': 'Marcos', 'telefone': '3333-2222'}, {'nome': 'Thais', 'telefone': '3333-1111'}, {'nome': 'Miúxa', 'telefone': '3333-4444'}, {'nome': 'Peruca', 'telefone': '3333-5555'}, {'nome': 'Bento', 'telefone': '3333-7777'}])
+```
+
+### 12.4.12 - In
+Verifica se existe uma chave especificada em um dicionário. O resultado é um booleano True/False.
+
+Estrutura: [chave] in [dicionario]
+
+```
+print("telefone" in dados)
+>>>True
+
+print("maria@xpto.com" in contatos)
+>>>False
+
+print("telefone" in contatos["marcos@xpto.com"])
+>>>True
+
+print("idade" in contatos["marcos@xpto.com"])
+>>>False
+```
+
+### 12.4.13 - Del
+Remove o objeto especificado no comando do dicionário
+
+Estrutura: del [dicionario][[chave]]
+```
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'nome': 'Peruca', 'telefone': '3333-5555'}, 'bento@xpto.com': {'nome': 'Bento', 'telefone': '3333-7777'}}
+
+del contatos["bento@xpto.com"]
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos', 'telefone': '3333-2222'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'nome': 'Peruca', 'telefone': '3333-5555'}}
+
+del contatos["marcos@xpto.com"]["telefone"]
+print(contatos)
+>>>{'marcos@xpto.com': {'nome': 'Marcos'}, 'thais@xpto.com': {'nome': 'Thais', 'telefone': '3333-1111'}, 'miuxa@xpto.com': {'nome': 'Miúxa', 'telefone': '3333-4444'}, 'enzo@xpto.com': {'nome': 'Peruca', 'telefone': '3333-5555'}}
+```
+# 13. Funções
+
+Funções são blocos de código, identificados por um nome, e podem receber uma lista de parâmetros, que podem ter ou não valores padrão.
+
+Usar funções torna o código mais legível e possibilita reaproveitamento de código.
+
+As funções em Python são identificadas pelo comando *def*.
+
+```
+def exibir_mensagem():
+    print("Olá mundo!")
+
+def exibir_mensagem_2(nome):
+    print(f"Seja bem vindo {nome}!")
+
+def exibir_mensagem_3(nome="Anônimo"):
+    print(f"Seja bem vindo {nome}!")
+
+exibir_mensagem()
+>>>Olá mundo!
+
+exibir_mensagem_2(nome="Marcos")
+>>>Seja bem vindo Marcos! 
+
+exibir_mensagem_3()
+>>>Seja bem vindo Anônimo!
+
+exibir_mensagem_3(nome="Thais")
+>>>Seja bem vindo Thais!  
+```
+
+Para retornar um valor, usamos o comando *return*. Em python, por padrão, toda função retorna "None" e uma função pode retornar mais de um valor.
+
+```
+def calcular_total(numeros):
+    return sum(numeros)
+
+def retorna_antecessor_e_sucessor(numero):
+    antecessor = numero - 1
+    sucessor = numero + 1
+
+    return antecessor, sucessor
+
+print(calcular_total([10, 20, 34]))
+>>>64
+
+print(retorna_antecessor_e_sucessor(10))
+>>>(9, 11)
+```
+
+## 13.1 - Argumentos Nomeados
+
+Funções podem ser chamadas no código usando argumentos nomeados, na fomra chave/valor.
+
+No exemplo, temos 3 formas diferentes de inserir os dados solicitados pela função. A segunda é usando os argumentos nomeados:
+
+```
+def salvar_carro(marca, modelo, ano, placa):
+    #salva carro em um banco de dados...
+    print(f"Carro inserido com sucesso! {marca}/{modelo}/{ano}/{placa}")
+
+salvar_carro("Fiat", "Palio", 1999, "ABC-1234")
+>>>Carro inserido com sucesso! Fiat/Palio/1999/ABC-1234
+
+salvar_carro(marca="Fiat", modelo="Palio", ano=1999, placa="ABC-1234")
+>>>Carro inserido com sucesso! Fiat/Palio/1999/ABC-1234
+
+salvar_carro(**{"marca": "Fiat", "modelo": "Palio", "ano": 1999, "placa": "ABC-1234"})
+>>>Carro inserido com sucesso! Fiat/Palio/1999/ABC-1234
+```
+A vantagem de se utilizar o argumento nomeado é a diminuição de erros ocasionados pela troca de argumentos.
+
+No exemplo acima, a troca de posições dos dados de marca e modelo não são identificados pelo código. Mas usando o argumento nomeado, o utilizador do código consegue identificar quais são os dados solicitados na ordem correta.
+
+## 13.2 - Args e Kwargs
+Podemos combinar os parâmetros obrigatórios de uma função com args (tupla) e kwargs (dicionário).
+Esses são definidos com * (args) e ** (kwargs).
+
+A terceira forma, do exemplo anterior, com o uso dos **, indica que será inserido um kwarg (dicionário). Portanto, os dados são inseridos como já vimos anteriormente.
+
+
+```
+def exibir_poema(data_extenso, *args, **kwargs):
+    texto = "\n".join(args)
+    meta_dados = "\n".join([f"{chave.title()}: {valor}" for chave, valor in kwargs.items()])
+    mensagem = f"{data_extenso}\n\n{texto}\n\n{meta_dados}"
+    print(mensagem)
+
+exibir_poema("Segunda-feira, 25 de setembro de 2023", "Zen of Python", "Beautiful is better then ugly.", autor="Tim Peters", ano=1999)
+```
+
+Repare que, na definição da função, temos **data_extenso**, ***args** e ****kwargs** como argumentos. O python identifica a primeira entrada como **data_extenso**. A seguir, tudo que for separado por vígula será identificado como tupla e , quando for uma entrada de chave/valor será identificado como dicionário. Então, não importa quantos versos terão o poema, enquanto não houver uma entrada no padrão chave/valor, a função irá identificar como tupla.
+
+## 13.3 - Parâmetros especiais (Aula34.py)
+
+Por padrão, os argumentos de uma função podem ser passados por posição ou por nome. Para melhorar a legibilidade do código, faz sentido restringir a maneira pela qual os argumentos serão passados. Essas maneiras são por posição, por posição e nome ou por nome.
+
+Esses parâmetros, quando usados na mesma função, são separados por barra "/"
+
+### 13.3.1 - Por posição
+
+Por posição é a mais simples. Seguem a posição dos parâmetros da função, sendo que devem ser informados na posição definida (na ordem da função).
+
+```
+def criar_carro(modelo, ano, placa)
+    print(modelo, ano placa)
+
+criar_carro("Palio", 1999, "ABC-1234")
+>>>Palio 1999 ABC-1234
+```
+
+Na definição da função, os parâmetros são nomeados. Então, quando for executar a função, cada parâmetro é "chamado" pelo nome para então receber seu valor. Dessa forma, não importa a ordem em que são inseridos, desde que estejam nomeados.
+
+```
+def criar_carro(marca, motor, combustivel):
+    print(marca, motor, combustivel)
+
+criar_carro(motor="1.0", combustivel="Gasolina", marca="Fiat")
+>>>Fiat 1.0 Gasolina
+```
+Nessa forma, os parâmetros também podem ser preenchidos como se fosse por posição.
+
+```
+def criar_carro(marca, motor, combustivel):
+    print(marca, motor, combustivel)
+
+criar_carro("GM", "1.4", "Etanol")
+>>>GM 1.4 Etanol
+```
+### 13.3.2 - Por nome
+Para que todos os parâmetros sejam nomeados, pode-se adicionar um asterisco "*" no início da função. Dessa forma, quando na execução da função, todos os parâmetros deverão ser preenchidos de forma nomeada.
+
+```
+def criar_carro2(*,modelo, ano, placa, marca, motor, combustivel):
+    print(modelo, ano, placa, marca, motor, combustivel)
+
+criar_carro2(modelo="Palio", ano=1999, placa="ABC-1234", motor="1.0", combustivel="Gasolina", marca="Fiat")
+>>>Palio 1999 ABC-1234 Fiat 1.0 Gasolina
+```
+
+Obs: Esse método difere de **args** pois para inserir tuplas na função, não há o uso de vírgula:
+def funcao(a, b, *c) --> c é uma tupla
+def funcao(*, a, b)  --> a e b são parâmetros nominais
+
+### 13.3.3 - Por Posição e Nome
+Para utilizar os dois métodos na mesma função, usa-se a barra "/" para separar onde termina um e começa o outro, além do "*" para indicar onde inicia os parâmetros nominais.
+
+```
+def criar_carro3(modelo, ano, placa, /, *, marca, motor, combustivel):
+        print(modelo, ano, placa, marca, motor, combustivel)
+
+criar_carro3("Palio", 1999, "ABC-1234", motor="1.0", combustivel="Gasolina", marca="Fiat")
+>>>Palio 1999 ABC-1234 Fiat 1.0 Gasolina
+
+criar_carro3("Corsa", 2010, "FGH-5678", "GM", "1.4", "Etanol")
+>>> TypeError: criar_carro3() takes 3 positional arguments but 6 were given
+
+criar_carro3(modelo="Palio", ano=1999, placa="ABC-1234", marca="Fiat", motor="1.0", combustivel="Gasolina")
+>>>criar_carro3() got some positional-only arguments passed as keyword arguments: 'modelo, ano, placa'
+```
+## 13.4 - Objetos de primeira classe (Aula35.py)
+Como tudo no Python é um objeto, as funções também o são. Dessa forma, é possível que as funções possam ser atribuídas a uma variável, podem ser parâmetros de outras funções, podem ser valores em estruturas de dados (listas, tuplas, dicionários...) e serem usadas como valor de retorno de uma função (closures).
+
+```
+def somar(a, b):
+    return a + b
+
+def exibir_resultado(a, b, funcao):
+    resultado = funcao(a, b)
+    print(f"O resuldado da operação {a} + {b} = {resultado}")
+
+exibir_resultado(10, 10, somar)
+>>>O resuldado da operação 10 + 10 = 20
+```
+A função **exibir_resultado** executa uma outra função já definida (no caso a função **somar**). Os parâmetros da função **exibir_resultado** são os dois números que serão calculados, mais a operação (outra função) a ser executada.
+
+```
+op = somar
+print(op(12, 10))
+>>>22
+```
+Aqui a variável **op** foi definida como sendo a função **somar**. Dessa forma, a variável tem o mesmo comportamento da função, sendo necessário atribuir os parâmetros.
+Se não forem atribuidos, o resultado de **print(op)** será o local onde a função está armazenada.
+
+```
+print(op)
+>>><function somar at 0x0000024ACA3904A0>
+```
+## 13.5 - Escopo
+Python trabalha com escopo local e global.
+
+Dentro do bloco da função, o escopo é local. Ou seja, as alterações feitas em objetos imutáveis serão perdidas quando o método terminar de ser executado.
+
+Para usar objetos globais utilizamos a palavra-chave *global*, que informa ao interpretador que a variável que está sendo manipulada no escopo local é global.
+
+No entanto, essa prática deve ser evitada, para que se mantenha as boas práticas e facilidade na leitura e manutenção do código.
+
+```
+salario = 2000
+
+def salario_bonus(bonus):
+    global salario
+    salario += bonus
+    return salario
+
+salario_bonus(500)
+print(salario)
+>>>2500
+```
+Perceba que o valor do salário foi alterado, pois usamos a variável do escopo global. Então, muito cuidado ao usar o **global**. 
+
+?- pq o valor de **salario** não foi apresentado ao final da função?
