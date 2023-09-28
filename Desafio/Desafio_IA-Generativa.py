@@ -27,7 +27,7 @@ users = [user for id in user_ids if (user := get_user(id)) is not None]
 # 3. Clique em "Create API Key"
 
 
-openai_api_key = "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"
+openai_api_key = "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"
 
 import openai
 
